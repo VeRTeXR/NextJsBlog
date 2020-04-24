@@ -1,12 +1,18 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/posts'
+
 import Link from 'next/link'
 import Date from '../components/date'
+import config from "../config.json";
+import { createClient } from "contentful";
 
+const client = createClient({
+    space: config.space,
+    accessToken: config.accessToken
+});
 
-export default function Home({ allPostsData }) {
+export default function Home(props) {
   return (
     <Layout home>
       <Head>
@@ -18,16 +24,11 @@ export default function Home({ allPostsData }) {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
-              <li className={utilStyles.listItem} key={id}>
-                  <Link href="/posts/[id]" as={`/posts/${id}`}>
-                      <a>{title}</a>
-                  </Link>
-                  <br />
-                  <small className={utilStyles.lightText}>
-                      <Date dateString={date} />
-                  </small>
-              </li>
+          {props.allPosts.map(post => (
+              // <Link href="/posts/[id]" as={`/posts/${id}`}>
+             // <Link>
+              <a>{post.fields.title}</a>
+              // </Link>
           ))}
         </ul>
       </section>
@@ -35,11 +36,15 @@ export default function Home({ allPostsData }) {
   )
 }
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
-}
+Home.getInitialProps = async () => {
+    // Get every entries in contentful from type Article, sorted by date.
+    // article is the ID of the content model we created on the dashboard.
+    const entries = await client.getEntries({
+        content_type: "article",
+        order: "-fields.date"
+    });
+
+    // Inject in props of our screen component
+    return { allPosts: entries.items };
+};
+
