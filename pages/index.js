@@ -24,12 +24,13 @@ export default function Home(props) {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {props.allPosts.map(post => (
-              // <Link href="/posts/[id]" as={`/posts/${id}`}>
-             // <Link>
-              <a>{post.fields.title}</a>
-              // </Link>
-          ))}
+            {props.allPosts.map( (post) => (
+                <li className={utilStyles.listItem} key={post.sys.id}>
+                    <Link href={"/posts/[detail]"} as={`/posts/${post.sys.id}`}>
+                        <a>{post.fields.title}</a>
+                    </Link>
+                </li>
+            ) )}
         </ul>
       </section>
     </Layout>
