@@ -1,5 +1,5 @@
 import {createClient} from "contentful";
-import config from "../../config";
+import config from "../../config.json";
 import React from "react";
 import Head from 'next/head'
 import Layout from "../../components/layout";
@@ -12,25 +12,42 @@ const client = createClient( {
 } );
 
 
-export default class Detail extends React.Component {
+type DetailPageProps = {
+    query : any,
+}
 
-    static async getInitialProps({query}) {
+type AppState = {
+    title: string,
+    date: string,
+    body: any,
+    author: string,
+    authorFirstName: string,
+    authorLastName:string,
+    imageUrl: string,
+}
+
+
+export default class Detail extends React.Component<DetailPageProps, AppState> {
+
+   static async getInitialProps({query}) {
         return {query}
     }
 
     state = {
         title: "loading",
         date: '',
-        body: '',
+        body: null,
         author: '',
         imageUrl: '',
+        authorFirstName: '',
+        authorLastName: '',
 
     };
 
     componentDidMount = async () => {
         console.log( this.props );
-
-        let resp = await client.getEntry( this.props.query.detail );
+ 
+        let resp: any = await client.getEntry( this.props.query.detail );
         console.log( "resp", resp.fields);
         console.log(resp.fields.author.fields.firstname)
         this.setState( {
@@ -45,10 +62,10 @@ export default class Detail extends React.Component {
 
     render() {
         return (
-            <Layout>
-            <Head>
-                <title>{this.state.title}</title>
-            </Head>
+            // <Layout>
+            //<Head>
+              //   <title>{this.state.title}</title>
+            // </Head>
             <article>
                 <img src={this.state.imageUrl} className="img-responsive img-fit-cover" style={{ height: 265 }} />
                 <h1 className={utilStyles.headingXl}>{this.state.title}</h1>
@@ -64,7 +81,8 @@ export default class Detail extends React.Component {
                     </div>
                 </div>
             </article>
-        </Layout>
+        // </Layout>
+        
         );
     }
 };
