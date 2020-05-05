@@ -1,4 +1,5 @@
 {
   "space": "9wsh5xg6uqoa",
-  "accessToken": "jYAHzDIRiXq9eY9zEoJKsgjxbUZwk3TbKQo8_uRYhXw"
+  "accessToken": "jYAHzDIRiXq9eY9zEoJKsgjxbUZwk3TbKQo8_uRYhXw",
+  "backendBaseUrl" : "https://earena.opendream.in.th"
 }

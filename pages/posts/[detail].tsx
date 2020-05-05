@@ -60,12 +60,15 @@ export default class Detail extends React.Component<DetailPageProps, AppState> {
                 } );
     };
 
+    
+
+
     render() {
         return (
-            // <Layout>
-            //<Head>
-              //   <title>{this.state.title}</title>
-            // </Head>
+            // // <Layout {children =  }  >
+            // {/* //<Head>
+            //   //   <title>{this.state.title}</title>
+            // // </Head> */}
             <article>
                 <img src={this.state.imageUrl} className="img-responsive img-fit-cover" style={{ height: 265 }} />
                 <h1 className={utilStyles.headingXl}>{this.state.title}</h1>

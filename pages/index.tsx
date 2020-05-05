@@ -7,12 +7,15 @@ import Date from '../components/date'
 import config from "../config.json";
 import { createClient } from "contentful";
 
+import Router from "next/router";
+import { withApollo } from 'react-apollo';
+
 const client = createClient({
     space: config.space,
     accessToken: config.accessToken
 });
 
-export default function Home(props) {
+function Home(props) {
   return (
     <Layout home>
       <Head>
@@ -32,9 +35,17 @@ export default function Home(props) {
                 </li>
             ) )}
         </ul>
+        
+        <div>
+          <button onClick= {GoToSignUpPage} className={`btn btn-primary btn--full`}>{'SIGNUP'}</button>
+        </div>
       </section>
     </Layout>
   )
+}
+
+function GoToSignUpPage() {
+  Router.push("/sign-up")
 }
 
 Home.getInitialProps = async () => {
@@ -49,3 +60,5 @@ Home.getInitialProps = async () => {
     return { allPosts: entries.items };
 };
 
+
+export default withApollo(Home)
