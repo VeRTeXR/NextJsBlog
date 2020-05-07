@@ -27,7 +27,7 @@ type AppState = {
 }
 
 
-export default class Detail extends React.Component<DetailPageProps, AppState> {
+export default class Detail extends React.Component<DetailPageProps, AppState > {
 
    static async getInitialProps({query}) {
         return {query}
@@ -65,11 +65,11 @@ export default class Detail extends React.Component<DetailPageProps, AppState> {
 
     render() {
         return (
-            // // <Layout {children =  }  >
-            // {/* //<Head>
-            //   //   <title>{this.state.title}</title>
-            // // </Head> */}
-            <article>
+            <Layout home>
+            <Head>
+   <title>{this.state.title}</title>
+             </Head> 
+                         <article>
                 <img src={this.state.imageUrl} className="img-responsive img-fit-cover" style={{ height: 265 }} />
                 <h1 className={utilStyles.headingXl}>{this.state.title}</h1>
                 <div className={utilStyles.lightText}>
@@ -84,7 +84,7 @@ export default class Detail extends React.Component<DetailPageProps, AppState> {
                     </div>
                 </div>
             </article>
-        // </Layout>
+        </Layout>
         
         );
     }
